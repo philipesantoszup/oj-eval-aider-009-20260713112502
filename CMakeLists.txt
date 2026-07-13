@@ -17,7 +17,7 @@ add_test(NAME vector_four COMMAND sh -c "${CMAKE_CURRENT_BINARY_DIR}/vector_four
         && diff -u ${CMAKE_CURRENT_SOURCE_DIR}/data/four/answer.txt /tmp/four_out.txt>/tmp/four_diff.txt")
 add_test(NAME vector_five COMMAND sh -c "${CMAKE_CURRENT_BINARY_DIR}/vector_five >/tmp/five_out.txt\
         && diff -u ${CMAKE_CURRENT_SOURCE_DIR}/data/five/answer.txt /tmp/five_out.txt>/tmp/five_diff.txt")
-add_test(NAME vector_six COMMAND sh -c "${CMAKE_CURRENT_BINARY_DIR}/vector_six >/tmp/six_out.txt\
+add_test(NAME vector_six COMMAND sh -.c "${CMAKE_CURRENT_BINARY_DIR}/vector_six >/tmp/six_out.txt\
         && diff -u ${CMAKE_CURRENT_SOURCE_DIR}/data/six/answer.txt /tmp/six_out.txt>/tmp/six_diff.txt")
 add_test(NAME vector_seven COMMAND sh -c "${CMAKE_CURRENT_BINARY_DIR}/vector_seven >/tmp/seven_out.txt\
         && diff -u ${CMAKE_CURRENT_SOURCE_DIR}/data/seven/answer.txt /tmp/seven_out.txt>/tmp/seven_diff.txt")
