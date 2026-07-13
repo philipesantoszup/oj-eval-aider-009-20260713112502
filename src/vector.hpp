@@ -28,10 +28,9 @@ private:
             new_data[i] = data[i];
         }
         
-        for (size_t i = 0; i < capacity; ++i) {
-            data[i].~T();
+        if (data) {
+            delete[] data;
         }
-        delete[] data;
         
         data = new_data;
         capacity = new_cap;
@@ -45,7 +44,7 @@ private:
         
         _reserve(new_size);
         for (size_t i = size_; i < new_size; ++i) {
-            new (&data[i]) T();
+            new (data + i) T();
         }
         size_ = new_size;
     }
@@ -78,7 +77,7 @@ public:
 		using value_type = T;
 		using pointer = T*;
 		using reference = T&;
-		using iterator_category = std::output_iterator_tag;
+		using iterator_category = std::random_access_iterator_tag;
 
 	private:
 		/**
@@ -190,7 +189,7 @@ public:
 		using value_type = T;
 		using pointer = T*;
 		using reference = T&;
-		using iterator_category = std::output_iterator_tag;
+		using iterator_category = std::random_access_iterator_tag;
 
 	private:
 		const vector* vec;
@@ -385,7 +384,7 @@ public:
         if (size_ == 0) {
             throw sjtu::container_is_empty();
         }
-        return data[size_ - 1];
+        return data[size_ -  1];
     }
 	/**
 	 * returns an iterator to the beginning.
@@ -424,6 +423,12 @@ public:
         return size_;
     }
 	/**
+	 * returns the capacity of the container, i.e. the total number of elements that can be held
+	 */
+	size_t capacity() const {
+        return capacity;
+    }
+	/**
 	 * clears the contents
 	 */
 	void clear() {
@@ -447,7 +452,10 @@ public:
         }
         
         size_t index = pos.index;
-        _reserve(size_ + 1);
+        if (size_ >= capacity) {
+            size_t new_cap = (capacity == 0) ? 1 : capacity * 2;
+            _reserve(new_cap);
+        }
         
         for (size_t i = size_; i > index; --i) {
             data[i] = data[i - 1];
@@ -510,7 +518,8 @@ public:
 	 */
 	void push_back(const T &value) {
         if (size_ >= capacity) {
-            _reserve(capacity == 0 ? 1 : capacity * 2);
+            size_t new_cap = (capacity == 0) ? 1 : capacity * 2;
+            _reserve(new_cap);
         }
         data[size_] = value;
         ++size_;
