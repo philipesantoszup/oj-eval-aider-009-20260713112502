@@ -1,8 +1,6 @@
 #ifndef SJTU_EXCEPTIONS_HPP
 #define SJTU_EXCEPTIONS_HPP
 
-#include <cstddef>
-#include <cstring>
 #include <string>
 
 namespace sjtu {
@@ -23,19 +21,47 @@ class exception {
 };
 
 class index_out_of_bound : public exception {
-    /* __________________________ */
+   public:
+    index_out_of_bound() : exception() {
+        variant = "index_out_of_bound";
+    }
+    index_out_of_bound(const std::string &msg) : exception() {
+        variant = "index_out_of_bound";
+        detail = msg;
+    }
 };
 
 class runtime_error : public exception {
-    /* __________________________ */
+   public:
+    runtime_error() : exception() {
+        variant = "runtime_error";
+    }
+    runtime_error(const std::string &msg) : exception() {
+        variant = "runtime_error";
+        detail = msg;
+    }
 };
 
 class invalid_iterator : public exception {
-    /* __________________________ */
+   public:
+    invalid_iterator() : exception() {
+        variant = "invalid_iterator";
+    }
+    invalid_iterator(const std::string &msg) : exception() {
+        variant = "invalid_iterator";
+        detail = msg;
+    }
 };
 
 class container_is_empty : public exception {
-    /* __________________________ */
+   public:
+    container_is_empty() : exception() {
+        variant = "container_is_empty";
+    }
+    container_is_empty(const std::string &msg) : exception() {
+        variant = "container_is_empty";
+        detail = msg;
+    }
 };
 }  // namespace sjtu
 
